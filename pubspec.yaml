@@ -1,0 +1,45 @@
+name: alpha
+description: A new Flutter project.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+version: 1.0.0+1
+
+environment:
+  sdk: '>=2.18.2 <3.0.0'
+dependencies:
+  flutter:
+    sdk: flutter
+  #ui:
+  cupertino_icons: ^1.0.2
+  loading_indicator: ^3.0.3
+
+  #animations:
+  animate_do: ^2.1.0
+
+  #path_provider:
+  path_provider: ^2.0.12
+
+  #State Management & Cashing:
+  hydrated_bloc: ^9.0.0
+  flutter_bloc: ^8.1.1
+
+  #Networking
+  http: ^0.13.4
+
+  #dartz:
+  dartz: ^0.10.1
+
+  #local_storage:
+  shared_preferences: ^2.0.15
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+    - assets/lotties/
+    - assets/translations/

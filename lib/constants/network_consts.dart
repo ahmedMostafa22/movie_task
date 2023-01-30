@@ -1,5 +1,6 @@
 class NetworkConstants {
-  static const String baseUrl = 'https://unogsng.p.rapidapi.com';
-  static const search = '/search';
-  static const String rapidAPIHost = 'unogsng.p.rapidapi.com';
+  static const String getNowPlayingUrl =
+      'https://api.themoviedb.org/3/movie/now_playing?api_key=bf76536dbf3b6eb64b59bb11959b9b21';
+
+  static const String imageBaseUrl = 'https://image.tmdb.org/t/p/original';
 }

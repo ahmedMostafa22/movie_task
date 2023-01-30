@@ -16,7 +16,7 @@ class MoviesBloc extends HydratedBloc<MoviesEvent, MoviesState> {
       if (event is GetLatestMovies) {
         DateTime lastUpdate = await SharedPreferencesHelper.getLastUpdate();
         if (lastUpdate
-            .isBefore(DateTime.now().subtract(const Duration(days: 1)))) {
+            .isBefore(DateTime.now().subtract(const Duration(minutes: 1)))) {
           emit(MoviesLoading());
           await MoviesRepository()
               .getLatestMovies()
@@ -24,51 +24,31 @@ class MoviesBloc extends HydratedBloc<MoviesEvent, MoviesState> {
                     Widget errorWidget = ExceptionHandler.getExceptionWidget(
                         e, () => add(event));
                     emit(MoviesError(errorWidget));
-                  }, (movies) => emit(MoviesLoaded(movies))));
-        } else {}
+                  }, (movies) {
+                    SharedPreferencesHelper.setLastUpdate(DateTime.now());
+                    emit(MoviesLoaded(movies));
+                  }));
+        }
       }
     });
   }
 
   @override
   MoviesState? fromJson(Map<String, dynamic> json) {
-    // TODO: implement fromJson
-    throw UnimplementedError();
+    print('Fetching movies from cache');
+    if (json['movies'] == null) {
+      return MoviesInitial();
+    }
+    return MoviesLoaded(
+        List<Movie>.from(json['movies'].map((m) => Movie.fromJson(m)) ?? []));
   }
 
   @override
   Map<String, dynamic>? toJson(MoviesState state) {
-    // TODO: implement toJson
-    throw UnimplementedError();
+    print('Saving movies to cache');
+    if (state is MoviesLoaded) {
+      print({'movies': state.movies.map((a) => a.toMap()).toList()});
+      return {'movies': state.movies.map((a) => a.toMap()).toList()};
+    }
   }
-  Map<String, dynamic> coursesStateToJson(CoursesState state) {
-    return {
-      'allCourses': state.allCourses.map((a) => _courseToJson(a)).toList(),
-      'classroomId': state.classroomId
-    };
-  }
-
-  CoursesState coursesStateFromJson(Map<String, dynamic> json) {
-    return CoursesState(
-        List<Course>.from(
-            json['allCourses']?.map((a) => _courseFromJson(a)) ?? []),
-        json['classroomId'] ?? '');
-  }
-
-  Course _courseFromJson(Map<String, dynamic> json) {
-    return Course(
-      json['id'],
-      json['name'],
-      json['image'] ?? '',
-      json['classroomId'],
-    );
-  }
-
-  Map<String, dynamic> _courseToJson(Course course) {
-    return {
-      'id': course.id,
-      'name': course.name,
-      'image': course.image,
-      'classroomId': course.classroomId
-    };
 }

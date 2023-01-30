@@ -11,9 +11,10 @@ import '../enums/request_methods.dart';
 class Api {
   final Duration _timeOut = const Duration(minutes: 1);
 
-  Future<Either<Exception, Response>> request(String requestUrl,
-      RequestMethod requestMethod, Map<String, String> headers,
-      {Map<String, dynamic> body = const {},
+  Future<Either<Exception, Response>> request(
+      String requestUrl, RequestMethod requestMethod,
+      {Map<String, String> headers = const {},
+      Map<String, dynamic> body = const {},
       List<MultipartFile> files = const []}) async {
     try {
       final DateTime startTime = DateTime.now();

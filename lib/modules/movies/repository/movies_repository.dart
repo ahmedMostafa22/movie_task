@@ -9,7 +9,7 @@ class MoviesRepository {
   Future<Either<Exception, List<Movie>>> getLatestMovies() =>
       MoviesServices().getLatestMovies().then((result) => result.fold(
           (e) => left(e),
-          (response) => right((jsonDecode(response.body)['movies'] as List)
+          (response) => right((jsonDecode(response.body)['results'] as List)
               .map((m) => Movie.fromJson(m))
               .toList())));
 }

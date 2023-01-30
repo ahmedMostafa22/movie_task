@@ -1,4 +1,6 @@
 import 'package:alpha/modules/movies/bloc/movies_bloc.dart';
+import 'package:alpha/modules/movies/repository/movies_repository.dart';
+import 'package:alpha/modules/movies/views/screens/movies_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
@@ -18,7 +20,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: Container(),
+      home: const MoviesScreen(),
     );
   }
 }
